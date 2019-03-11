@@ -18,6 +18,13 @@ class State {
   removeCounter(id) {
     this.counters = this.counters.filter((c) => c.id !== id);
   }
+
+  incrementAll() {
+    this.counters.forEach((c) => {
+      c.state.add(1);
+      return c;
+    });
+  }
 }
 
 @observer
@@ -30,6 +37,11 @@ class Component extends React.Component {
         <p> Total is { total } </p>
         <button className='ml3' onClick={() => state.addCounter()}>
           New counter
+        </button>
+        <button
+          onClick={() => state.incrementAll()}
+          disabled={!state.counters.length}>
+          Increment all
         </button>
 
         <div>{
