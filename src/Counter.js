@@ -12,12 +12,6 @@ class State {
 
 @observer
 class Component extends React.Component {
-  doAdd(n) {
-    this.props.state.add(n);
-    this.setState({
-      count: this.state.count + n,
-    });
-  }
   render() {
     const state = this.props.state;
     return (

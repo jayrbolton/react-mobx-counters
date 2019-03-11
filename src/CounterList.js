@@ -14,6 +14,10 @@ class State {
       state: new Counter.State(),
     });
   }
+
+  removeCounter(id) {
+    this.counters = this.counters.filter((c) => c.id !== id);
+  }
 }
 
 @observer
@@ -32,6 +36,10 @@ class Component extends React.Component {
           state.counters.map((counter) =>
             <div key={counter.id}>
               <Counter.Component state={ counter.state } />
+              <button onClick={() => state.removeCounter(counter.id)}>
+                Remove this counter
+              </button>
+              <hr />
             </div>
           )
         }</div>
