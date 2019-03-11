@@ -13,6 +13,7 @@ class State {
 @observer
 class Component extends React.Component {
   render() {
+    // state should be an instance of the State class above
     const state = this.props.state;
     return (
       <div>
