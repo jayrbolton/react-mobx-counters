@@ -10,23 +10,17 @@ class State {
   }
 }
 
-@observer
-class Component extends React.Component {
-  render() {
-    // state should be an instance of the State class above
-    const state = this.props.state;
-    return (
-      <div>
-        Count is { state.count }
-        <button className='ml3' onClick={() => state.add(1)}>
-          Increment
-        </button>
-        <button className='ml3' onClick={() => state.add(-1)}>
-          Decrement
-        </button>
-      </div>
-    );
-  }
-}
+const Component = observer(({state}) =>
+  // state should be an instance of the State class above
+  <div>
+    Count is { state.count }
+    <button className='ml3' onClick={() => state.add(1)}>
+      Increment
+    </button>
+    <button className='ml3' onClick={() => state.add(-1)}>
+      Decrement
+    </button>
+  </div>
+);
 
 export default {State, Component};

@@ -30,46 +30,43 @@ class State {
   }
 }
 
-@observer
-class Component extends React.Component {
-  render() {
-    // state should be an instance of the State class above
-    const state = this.props.state;
-    const total = state.counters.reduce((sum, c) => sum + c.state.count, 0);
-    return (
-      <div>
-        <p> Total is { total } </p>
-        {/* Button to append a new counter to the page. */}
-        <button className='ml3' onClick={() => state.addCounter()}>
-          New counter
-        </button>
-        {/* Button to increment all counters on the page by 1. */}
-        <button
-          onClick={() => state.incrementAll()}
-          disabled={!state.counters.length}>
-          Increment all
-        </button>
-
-        {/*
-           For each counter object in the state.counters array:
-             - wrap each in a div with its `key` set to the id
-             - render the counter's react component with state in the props
-             - append a remove button to the end of the counter
-        */}
-        <div>{
-          state.counters.map((counter) =>
-            <div key={counter.id}>
-              <Counter.Component state={ counter.state } />
-              <button onClick={() => state.removeCounter(counter.id)}>
-                Remove this counter
-              </button>
-              <hr />
-            </div>
-          )
-        }</div>
-      </div>
-    );
-  }
+function getTotal(counters) {
+  return counters.reduce((sum, c) => sum + c.state.count, 0);
 }
+
+const Component = observer(({state}) =>
+  // state should be an instance of the State class above
+  <div>
+    <p> Total is { getTotal(state.counters) } </p>
+    {/* Button to append a new counter to the page. */}
+    <button className='ml3' onClick={() => state.addCounter()}>
+      New counter
+    </button>
+    {/* Button to increment all counters on the page by 1. */}
+    <button
+      onClick={() => state.incrementAll()}
+      disabled={!state.counters.length}>
+      Increment all
+    </button>
+
+    {/*
+       For each counter object in the state.counters array:
+         - wrap each in a div with its `key` set to the id
+         - render the counter's react component with state in the props
+         - append a remove button to the end of the counter
+    */}
+    <div>{
+      state.counters.map((counter) =>
+        <div key={counter.id}>
+          <Counter.Component state={ counter.state } />
+          <button onClick={() => state.removeCounter(counter.id)}>
+            Remove this counter
+          </button>
+          <hr />
+        </div>
+      )
+    }</div>
+  </div>
+);
 
 export default {State, Component};
