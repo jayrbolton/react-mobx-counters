@@ -1,26 +1,33 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import {observable} from 'mobx';
-import {observer} from 'mobx-react';
+import {observable, action} from 'mobx';
 
-class State {
+// Components
+import Button from './Button';
+
+export class CounterState {
+  constructor (initial) {
+    if (initial) {
+      this.count = initial;
+    }
+  }
+
   @observable count = 0;
 
+  @action
   add(n) {
     this.count += n;
   }
 }
 
-const Component = observer(({state}) =>
-  // state should be an instance of the State class above
-  <div>
-    Count is { state.count }
-    <button className='ml3' onClick={() => state.add(1)}>
-      Increment
-    </button>
-    <button className='ml3' onClick={() => state.add(-1)}>
-      Decrement
-    </button>
-  </div>
-);
+export function Counter({state}) {
+  return (
+    <div>
+      Count is { state.count }
+      <Button txt='Increment' onClick={() => state.add(1)} />
+      <Button txt='Decrement' onClick={() => state.add(-1)} />
+    </div>
+  );
+}
 
-export default {State, Component};
+Counter.propTypes = { state: PropTypes.object }
